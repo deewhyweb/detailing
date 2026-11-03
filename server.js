@@ -6,25 +6,38 @@ const nodemailer = require('nodemailer');
 
 const PORT = process.env.PORT || 3000;
 const CONTACT_TO = process.env.CONTACT_TO || 'info@hayes-detailing.com';
-const CONTACT_FROM = process.env.CONTACT_FROM || 'Hayes Detailing Website <no-reply@hayes-detailing.com>';
+
+// Google Workspace SMTP. SMTP_USER is the mailbox that signs in; SMTP_PASS is a Google
+// App Password for that account (secret, set with `fly secrets set`).
+const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
+const SMTP_SECURE = (process.env.SMTP_SECURE || String(SMTP_PORT === 465)) === 'true';
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = process.env.SMTP_PASS;
+// Gmail only sends as the signed-in user or a verified "Send mail as" alias.
+const CONTACT_FROM = process.env.CONTACT_FROM || `Hayes Detailing Website <${SMTP_USER || CONTACT_TO}>`;
 
 const app = express();
 app.disable('x-powered-by');
+// Behind Fly's proxy: use the client IP from X-Forwarded-For for rate limiting.
+app.set('trust proxy', 1);
 app.use(express.json({ limit: '20kb' }));
 app.use(express.urlencoded({ extended: false, limit: '20kb' }));
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
-// Mail transport: configured via SMTP_* env vars. Without them, submissions are logged to the console.
+// Without SMTP credentials, submissions are logged to the console instead of emailed.
 let transporter = null;
-if (process.env.SMTP_HOST) {
+if (SMTP_USER && SMTP_PASS) {
   transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 587),
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: process.env.SMTP_USER
-      ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-      : undefined,
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_SECURE,
+    auth: { user: SMTP_USER, pass: SMTP_PASS.replace(/\s+/g, '') }, // app passwords are shown with spaces
   });
+  transporter.verify().then(
+    () => console.log(`SMTP ready: ${SMTP_USER} via ${SMTP_HOST}:${SMTP_PORT}`),
+    (err) => console.error(`SMTP verify failed for ${SMTP_USER}: ${err.message}`)
+  );
 }
 
 // Very small in-memory rate limit: 5 submissions per IP per 15 minutes.

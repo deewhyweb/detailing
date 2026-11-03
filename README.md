@@ -11,15 +11,18 @@ npm start            # http://localhost:3000
 
 If SMTP is not set up, the server prints contact form submissions to the console.
 
-## Email delivery
+## Email delivery (Google Workspace SMTP)
 
-Copy `.env.example` to `.env`, fill in your SMTP details, and start the server with:
+Contact form messages go through `smtp.gmail.com:465`, signed in as `SMTP_USER`, and are delivered to `CONTACT_TO`. Reply-To is set to the visitor's address.
 
-```bash
-node --env-file=.env server.js
-```
+On Fly.io, the non-secret settings are in `fly.toml` under `[env]`. The password is a Fly secret:
 
-Messages go to `CONTACT_TO` (default `info@hayes-detailing.com`). Reply-To is set to the visitor's address.
+1. Turn on 2-Step Verification for the `SMTP_USER` Google account.
+2. Create an App Password at https://myaccount.google.com/apppasswords.
+3. Run `fly secrets set SMTP_PASS='xxxx xxxx xxxx xxxx'`. This redeploys the app.
+4. Check `fly logs` for `SMTP ready`.
+
+To send real email locally, copy `.env.example` to `.env`, fill it in, and run `node --env-file=.env server.js`.
 
 ## Structure
 

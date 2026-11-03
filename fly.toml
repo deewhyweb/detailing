@@ -8,6 +8,16 @@ primary_region = 'ams'
 
 [build]
 
+[env]
+  CONTACT_TO = 'info@hayes-detailing.com'
+  SMTP_HOST = 'smtp.gmail.com'
+  SMTP_PORT = '465'
+  SMTP_SECURE = 'true'
+  # Sign in as the real mailbox; info@ is an alias of it.
+  SMTP_USER = 'adam@hayes-detailing.com'
+  CONTACT_FROM = 'Hayes Detailing Website <info@hayes-detailing.com>'
+  # SMTP_PASS is a secret: fly secrets set SMTP_PASS='xxxx xxxx xxxx xxxx'
+
 [http_service]
   internal_port = 3000
   force_https = true
@@ -17,7 +27,6 @@ primary_region = 'ams'
   processes = ['app']
 
 [[vm]]
-  memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 256
