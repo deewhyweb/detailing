@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 30 600 170" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Hayes Detailing">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b8916a"/>
+      <stop offset="0.5" stop-color="#ecd2b0"/>
+      <stop offset="1" stop-color="#b8916a"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#g)" stroke-width="2.2">
+    <!-- body: tail, fastback roof, windshield, long hood, nose -->
+    <path d="M108 150 L86 150 C72 150 66 141 68 129 C70 117 66 109 74 101 C100 92 138 86 168 76 C208 56 250 46 300 46 C336 46 360 55 386 70 C406 82 432 88 462 92 C502 98 528 105 542 116 C552 124 552 138 548 150 L520 150"/>
+    <!-- greenhouse -->
+    <path d="M188 78 C222 60 260 53 300 54 C328 55 350 62 368 74 L204 80 Z" stroke-width="1.6"/>
+    <path d="M292 54 L285 77" stroke-width="1.4"/>
+    <!-- wheel arches -->
+    <path d="M108 154 A32 32 0 0 1 172 154"/>
+    <path d="M456 154 A32 32 0 0 1 520 154"/>
+    <!-- road arc -->
+    <path d="M10 192 Q300 132 590 196" stroke-width="2.6"/>
+  </g>
+</svg>

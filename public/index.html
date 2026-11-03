@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hayes Detailing | Premium Auto Detailing in Portsmouth, NH</title>
+  <meta name="description" content="Hayes Detailing offers premium auto detailing in Portsmouth, New Hampshire and the Seacoast. Request a quote today.">
+  <link rel="canonical" href="https://hayes-detailing.com/">
+  <meta property="og:title" content="Hayes Detailing | Premium Auto Detailing">
+  <meta property="og:description" content="Premium auto detailing in Portsmouth, NH.">
+  <meta property="og:url" content="https://hayes-detailing.com/">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0e0d0c">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoWash",
+    "name": "Hayes Detailing",
+    "url": "https://hayes-detailing.com",
+    "email": "info@hayes-detailing.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Portsmouth", "addressRegion": "NH", "addressCountry": "US" },
+    "areaServed": "Portsmouth, NH and the Seacoast"
+  }
+  </script>
+</head>
+<body>
+  <header class="nav">
+    <a href="#top" class="nav-brand">Hayes Detailing</a>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <img src="/logo.svg" alt="" class="hero-logo" width="600" height="220">
+      <h1 class="wordmark">Hayes Detailing</h1>
+      <p class="tagline">Premium Auto Detailing</p>
+      <p class="location">Portsmouth, New Hampshire</p>
+      <a href="#contact" class="btn">Request a Quote</a>
+    </section>
+
+    <section id="services" class="section">
+      <h2 class="section-title">Services</h2>
+      <p class="section-lead">Meticulous care, inside and out. Every detail is tailored to your vehicle&rsquo;s condition and your goals.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Exterior Detail</h3>
+          <p>Hand wash, decontamination, and protection to bring back a deep, lasting shine.</p>
+        </article>
+        <article class="card">
+          <h3>Interior Detail</h3>
+          <p>Thorough vacuuming, steam cleaning, and conditioning of leather, fabric, and trim.</p>
+        </article>
+        <article class="card">
+          <h3>Paint Correction</h3>
+          <p>Careful machine polishing to reduce swirls, scratches, and oxidation.</p>
+        </article>
+        <article class="card">
+          <h3>Ceramic Coating</h3>
+          <p>Long-term protection against road salt, UV, and New England weather.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" class="section about">
+      <h2 class="section-title">Seacoast Proud</h2>
+      <p>Hayes Detailing is a Portsmouth-based detailing business serving drivers across the New Hampshire Seacoast. From salt-season recovery to show-ready finishes, we treat every vehicle with patience and precision.</p>
+    </section>
+
+    <section id="contact" class="section">
+      <h2 class="section-title">Get in Touch</h2>
+      <p class="section-lead">Tell us about your vehicle and what you&rsquo;re looking for. We&rsquo;ll get back to you shortly.</p>
+
+      <form id="contact-form" class="form" novalidate>
+        <div class="row">
+          <label>Name<input name="name" type="text" autocomplete="name" required maxlength="100"></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+        </div>
+        <div class="row">
+          <label>Phone <span class="opt">(optional)</span><input name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+          <label>Vehicle <span class="opt">(year, make, model)</span><input name="vehicle" type="text" maxlength="120"></label>
+        </div>
+        <label>Service of interest
+          <select name="service">
+            <option value="">Not sure yet</option>
+            <option>Exterior Detail</option>
+            <option>Interior Detail</option>
+            <option>Full Detail</option>
+            <option>Paint Correction</option>
+            <option>Ceramic Coating</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Message<textarea name="message" rows="5" required maxlength="4000"></textarea></label>
+        <label class="hp" aria-hidden="true">Company<input name="company" type="text" tabindex="-1" autocomplete="off"></label>
+        <button type="submit" class="btn">Send Message</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="contact-alt">Prefer email? <a href="mailto:info@hayes-detailing.com">info@hayes-detailing.com</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img src="/logo.svg" alt="" width="120" height="44">
+    <p class="footer-name">Hayes Detailing</p>
+    <p>Portsmouth, NH &middot; <a href="mailto:info@hayes-detailing.com">info@hayes-detailing.com</a></p>
+    <p class="copy">&copy; <span id="year"></span> Hayes Detailing. All rights reserved.</p>
+  </footer>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
