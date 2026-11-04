@@ -7,15 +7,14 @@ const nodemailer = require('nodemailer');
 const PORT = process.env.PORT || 3000;
 const CONTACT_TO = process.env.CONTACT_TO || 'info@hayes-detailing.com';
 
-// Google Workspace SMTP. SMTP_USER is the mailbox that signs in; SMTP_PASS is a Google
-// App Password for that account (secret, set with `fly secrets set`).
-const SMTP_HOST = process.env.SMTP_HOST || 'smtp.gmail.com';
+// Resend SMTP: SMTP_USER is the literal string "resend"; SMTP_PASS is a Resend API key
+// (secret, set with `fly secrets set`). CONTACT_FROM must be on a domain verified in Resend.
+const SMTP_HOST = process.env.SMTP_HOST || 'smtp.resend.com';
 const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
 const SMTP_SECURE = (process.env.SMTP_SECURE || String(SMTP_PORT === 465)) === 'true';
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
-// Gmail only sends as the signed-in user or a verified "Send mail as" alias.
-const CONTACT_FROM = process.env.CONTACT_FROM || `Hayes Detailing Website <${SMTP_USER || CONTACT_TO}>`;
+const CONTACT_FROM = process.env.CONTACT_FROM || `Hayes Detailing Website <${CONTACT_TO}>`;
 
 const app = express();
 app.disable('x-powered-by');
@@ -32,7 +31,7 @@ if (SMTP_USER && SMTP_PASS) {
     host: SMTP_HOST,
     port: SMTP_PORT,
     secure: SMTP_SECURE,
-    auth: { user: SMTP_USER, pass: SMTP_PASS.replace(/\s+/g, '') }, // app passwords are shown with spaces
+    auth: { user: SMTP_USER, pass: SMTP_PASS.trim() },
   });
   transporter.verify().then(
     () => console.log(`SMTP ready: ${SMTP_USER} via ${SMTP_HOST}:${SMTP_PORT}`),
@@ -57,8 +56,11 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 app.post('/api/contact', async (req, res) => {
   const body = req.body || {};
 
-  // Honeypot: real visitors never fill this hidden field.
-  if (body.company) return res.json({ ok: true });
+  // Honeypot: real visitors never fill this hidden field. Named to avoid browser autofill.
+  if (body.hp_field) {
+    console.log(`Contact submission dropped by honeypot (ip ${req.ip})`);
+    return res.json({ ok: true });
+  }
 
   if (rateLimited(req.ip)) {
     return res.status(429).json({ ok: false, error: 'Too many requests. Please try again later.' });
@@ -89,13 +91,17 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     if (transporter) {
-      await transporter.sendMail({
+      const info = await transporter.sendMail({
         from: CONTACT_FROM,
         to: CONTACT_TO,
         replyTo: data.email,
         subject: `Website inquiry from ${data.name}`,
         text,
       });
+      console.log(
+        `Contact email sent: to=${CONTACT_TO} from=${data.email} accepted=${info.accepted.join(',')} ` +
+          `rejected=${info.rejected.join(',') || '-'} id=${info.messageId} response="${info.response}"`
+      );
     } else {
       console.log('--- New contact submission (SMTP not configured) ---\n' + text + '\n');
     }

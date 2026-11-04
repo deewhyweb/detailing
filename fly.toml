@@ -10,13 +10,13 @@ primary_region = 'ams'
 
 [env]
   CONTACT_TO = 'info@hayes-detailing.com'
-  SMTP_HOST = 'smtp.gmail.com'
+  # Sent through Resend so messages arrive in the Google inbox as normal incoming mail.
+  SMTP_HOST = 'smtp.resend.com'
   SMTP_PORT = '465'
   SMTP_SECURE = 'true'
-  # Sign in as the real mailbox; info@ is an alias of it.
-  SMTP_USER = 'adam@hayes-detailing.com'
+  SMTP_USER = 'resend'
   CONTACT_FROM = 'Hayes Detailing Website <info@hayes-detailing.com>'
-  # SMTP_PASS is a secret: fly secrets set SMTP_PASS='xxxx xxxx xxxx xxxx'
+  # SMTP_PASS is the Resend API key (a secret): fly secrets set SMTP_PASS='re_...'
 
 [http_service]
   internal_port = 3000

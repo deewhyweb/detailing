@@ -11,16 +11,18 @@ npm start            # http://localhost:3000
 
 If SMTP is not set up, the server prints contact form submissions to the console.
 
-## Email delivery (Google Workspace SMTP)
+## Email delivery (Resend)
 
-Contact form messages go through `smtp.gmail.com:465`, signed in as `SMTP_USER`, and are delivered to `CONTACT_TO`. Reply-To is set to the visitor's address.
+Contact form messages are sent through Resend (`smtp.resend.com:465`) from `info@hayes-detailing.com` and delivered to `CONTACT_TO`, the Google Workspace inbox. Reply-To is set to the visitor's address.
 
-On Fly.io, the non-secret settings are in `fly.toml` under `[env]`. The password is a Fly secret:
+Resend is used instead of signing in to Gmail. When the site signed in as the same Google account it was sending to, Gmail filed the messages under Sent instead of the Inbox.
 
-1. Turn on 2-Step Verification for the `SMTP_USER` Google account.
-2. Create an App Password at https://myaccount.google.com/apppasswords.
-3. Run `fly secrets set SMTP_PASS='xxxx xxxx xxxx xxxx'`. This redeploys the app.
-4. Check `fly logs` for `SMTP ready`.
+On Fly.io, the non-secret settings are in `fly.toml` under `[env]`. The Resend API key is a Fly secret:
+
+1. In Resend, verify `hayes-detailing.com` by adding its DNS records at IONOS.
+2. Create an API key with "Sending access".
+3. Run `fly secrets set SMTP_PASS='re_...'`. This redeploys the app.
+4. Check `fly logs` for `SMTP ready` and, after a submission, `Contact email sent`.
 
 To send real email locally, copy `.env.example` to `.env`, fill it in, and run `node --env-file=.env server.js`.
 

@@ -93,11 +93,18 @@ a:hover { color: var(--gold-soft); }
   color: var(--gold-soft);
 }
 .location {
-  margin: 0.25rem 0 2.5rem;
+  margin: 0.25rem 0 0;
   font-size: 0.8rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.hero-phone {
+  margin: 0.75rem 0 2.5rem;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
 }
 
 @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
